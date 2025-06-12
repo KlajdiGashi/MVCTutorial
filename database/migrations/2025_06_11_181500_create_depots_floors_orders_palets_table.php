@@ -8,21 +8,6 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('palets', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedInteger('total_boxes');
-            $table->json('meta')->nullable();
-            $table->foreignId('truck_id')->nullable()->constrained();
-            $table->string('vendor_palet_id')->nullable();
-            $table->string('label')->nullable();
-            $table->foreignId('user_id')->nullable()->constrained();
-            $table->foreignId('order_id')->nullable()->constrained();
-            $table->string('type')->nullable();
-            $table->string('version')->nullable();
-            $table->foreignId('area_id')->nullable()->constrained();
-            $table->timestamps();
-        });
-
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('total_palets')->nullable();
@@ -58,18 +43,23 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('depots', function (Blueprint $table) {
+        Schema::create('palets', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->unsignedInteger('total_boxes');
+            $table->json('meta')->nullable();
+            $table->foreignId('truck_id')->nullable()->constrained();
+            $table->string('vendor_palet_id')->nullable();
+            $table->string('label')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('order_id')->nullable()->constrained();
+            $table->string('type')->nullable();
+            $table->string('version')->nullable();
+            $table->foreignId('area_id')->nullable()->constrained();
             $table->timestamps();
         });
 
-        Schema::create('floors', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->foreignId('depot_id')->constrained();
-            $table->timestamps();
-        });
+
+
     }
 
     public function down(): void

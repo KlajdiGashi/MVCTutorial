@@ -12,10 +12,10 @@ return new class extends Migration
             $table->id();
             $table->string('vendor_box_id')->nullable();
             $table->string('label')->nullable();
-            
+
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
             $table->integer('total_modems')->default(0);
-            
+
             $table->foreignId('palet_id')->nullable()->constrained('palets')->onDelete('set null');
             $table->string('type')->nullable(); // enum as string
 

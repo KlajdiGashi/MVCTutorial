@@ -11,6 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::create('depots', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->timestamps();
+        });
+
+        Schema::create('floors', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->foreignId('depot_id')->constrained();
+            $table->timestamps();
+        });
+
         Schema::create('areas', function (Blueprint $table) {
         $table->id();
         $table->string('name');
@@ -74,7 +87,7 @@ return new class extends Migration
 
     // these SHOULD work like this, will be checked on tomorrow for reassurence tho.
     // Some of these might not even be needed in the future but oh well, better to have them if we ever need them.
-    
+
 
 
     }

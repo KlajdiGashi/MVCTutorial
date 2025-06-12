@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAdditionalModelsTables extends Migration
+class CreateInterfaceSignalPaletBoxModemActivitiesTagsTable extends Migration
 {
     public function up()
     {
@@ -51,6 +51,21 @@ class CreateAdditionalModelsTables extends Migration
             $table->timestamps();
         });
 
+                Schema::create('interfaces', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('modem_id')->constrained()->onDelete('cascade');
+            $table->string('name');
+            $table->integer('index')->nullable();
+            $table->text('description')->nullable();
+            $table->string('type')->nullable();
+            $table->string('speed')->nullable();
+            $table->string('physical_address')->nullable();
+            $table->string('admin_status')->nullable();
+            $table->string('operation_status')->nullable();
+            $table->timestamps();
+        });
+
+
         // Signals
         Schema::create('signals', function (Blueprint $table) {
             $table->id();
@@ -94,19 +109,6 @@ class CreateAdditionalModelsTables extends Migration
         });
 
         // Interfaces table
-        Schema::create('interfaces', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('modem_id')->constrained()->onDelete('cascade');
-            $table->string('name');
-            $table->integer('index')->nullable();
-            $table->text('description')->nullable();
-            $table->string('type')->nullable();
-            $table->string('speed')->nullable();
-            $table->string('physical_address')->nullable();
-            $table->string('admin_status')->nullable();
-            $table->string('operation_status')->nullable();
-            $table->timestamps();
-        });
     }
 
     public function down()
