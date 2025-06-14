@@ -28,24 +28,35 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+
+   // dd($request->all());
+
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|lowercase|email|max:255|unique:users,email',
+        'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+    $nameParts = preg_split('/\s+/', trim($request->name), 2);
+    $firstName = $nameParts[0];
+    $lastName = $nameParts[1] ?? $firstName;
 
-        event(new Registered($user));
+    $user = User::create([
+        'username' => $request->name,
+        'first_name' => $firstName,
+        'last_name' => $lastName,
+        'email' => $request->email,
+    'password' => Hash::make($request->password),
+    ]);
 
-        Auth::login($user);
+    //logger("Creating user: $username <$request->email>");
 
-        return to_route('dashboard');
-    }
+    event(new Registered($user));
+
+    Auth::login($user);
+
+    return to_route('dashboard');
+}
 }
