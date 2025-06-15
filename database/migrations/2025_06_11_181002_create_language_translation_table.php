@@ -13,9 +13,9 @@ return new class extends Migration
             $table->string('key_id');
             $table->foreignId('language_id')->constrained('languages');
             $table->text('value')->nullable();
-            
+
             $table->unique(['key_id', 'language_id']);
-            
+
             $table->foreign('key_id')
                   ->references('key')
                   ->on('language_keys')
